@@ -1,0 +1,105 @@
+// Note: START and END tags are used in comments to define sections used in
+// tutorials.  They are not part of the syntax for Protocol Buffers.
+//
+// To get an in-depth walkthrough of this file and the related examples, see:
+// https://developers.google.com/protocol-buffers/docs/tutorials
+
+// [START declaration]
+syntax = "proto3";
+package battle;
+// [END declaration]
+
+// [START java_declaration]
+option java_package = "com.linxk.battle";
+option java_outer_classname = "BattleProtos";
+// [END java_declaration]
+
+// [START csharp_declaration]
+option csharp_namespace = "Linxk.Protobuf.Battle";
+// [END csharp_declaration]
+
+// [START messages]
+
+// [START 僵尸端]
+message MsgGunIdReceived {
+	string gunid = 1; //枪ID
+}
+
+message MsgCardIdReceived {
+	string cardid = 1; //射频卡ID
+}
+// [END 僵尸端]
+
+// [START 人端]
+message MsgHumanResponseUserId {
+	string userid = 1; //用户ID
+}
+
+message MsgHumanRequestGunData {
+	string userid = 1; //用户ID
+	string gunid = 2; //枪ID
+}
+
+message MsgHumanResponseGunData {
+	int32 bulletcount = 1; //子弹数
+}
+
+message MsgHumanRequestUserData {
+	string userid = 1; //用户ID
+}
+
+message MsgHumanResponseUserData {
+	int32 hp = 1; //生命值
+	int32 score = 2; //积分
+}
+
+message MsgHumanRequestGunShot {
+	string gunid = 1; //枪ID
+	int32 count = 2; //开枪数
+}
+// [END 人端]
+
+enum MessageType {
+	// [START 僵尸端]
+	ZombieWasShot = 0; //僵尸被击中
+	ZombieTouchedCard = 1; //僵尸触碰射频卡
+	// [END 僵尸端]
+
+	// [START 人端]
+	HumanRequestUserId = 2; //人请求用户ID
+	HumanResponseUserId = 3; //服务器返回人用户ID
+
+	HumanRequestGunData = 5; //人请求枪支情况（如子弹数）
+	HumanResponseGunData = 6; //服务器返回枪支情况（如子弹数）
+	
+	HumanRequestUserData = 7; //人请求个人情况（如积分，血量）
+	HumanResponseUserData = 8; //服务器返回或主动发送个人情况（如积分，血量）
+	
+	HumanRequestGunShot = 9; //人开枪
+	// [END 人端]
+	
+	// [START 公用]
+	ResponseZombieModeGameStart = 4; //服务器发送僵尸模式游戏开始信号
+	// [END 公用]
+}
+
+enum ClientType {
+	Zombie = 0;
+	Human = 1;
+}
+
+message GlobalMessage {
+	MessageType msgtype = 1;
+	ClientType clienttype = 2;
+	string clientid = 3;
+
+	MsgGunIdReceived gunidreceived = 4;
+	MsgCardIdReceived cardidreceived = 5;
+	MsgHumanResponseUserId humanresponseuserid = 6;
+	MsgHumanRequestGunData humanrequestgundata = 7;
+	MsgHumanResponseGunData humanresponsegundata = 8;
+	MsgHumanRequestUserData humanrequestuserdata = 9;
+	MsgHumanResponseUserData humanresponseuserdata = 10;
+	MsgHumanRequestGunShot humanrequestgunshot = 11;
+}
+// [END messages]
