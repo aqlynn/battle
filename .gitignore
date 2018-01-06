@@ -1,0 +1,16 @@
+.DS_Store
+*.idea
+*.class
+.idea
+*.txt
+*.settings
+*.MF
+*.prefs
+.project
+.classpath
+*.lock
+*.bin
+.idea/**
+build/**
+*.iml
+**/target/**
